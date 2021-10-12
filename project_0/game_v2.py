@@ -17,12 +17,37 @@ def random_predict(number: int = 1) -> int:
     count = 0
 
     while True:
-        count+=1
+        count += 1
         predict_number = np.random.randint(1, 101)  # предполагаемое число
         if number == predict_number:
             break  # выход из цикла если угадали
     return count
 
+def better_predict(number: int = 1) -> int:
+    """Пытаемся угадать менее чем за 20 попыток
+
+    Args:
+        number (int, optional): Загаданное число. Defaults to 1.
+
+    Returns:
+        int: Число попыток
+    """
+    count = 0
+    predict_min = 0
+    predict_max = 100
+    
+    while count < 20:
+        count += 1
+        predict = int(np.mean(list(range(predict_min, predict_max))))
+        if predict +2 == predict_max:
+            predict_max += 1
+        if predict > number:
+            predict_max = predict
+        if predict < number:
+            predict_min = predict
+        if predict == number:
+            break
+    return count
 
 def score_game(random_predict) -> int:
     """За какое количство попыток в среднем за 1000 подходов угадывает наш алгоритм
@@ -48,3 +73,4 @@ def score_game(random_predict) -> int:
 if __name__ == "__main__":
     # RUN
     score_game(random_predict)
+    score_game(better_predict)
