@@ -36,7 +36,7 @@ def better_predict(number: int = 1) -> int:
     predict_min = 0
     predict_max = 100
     
-    while count < 20:
+    while True:
         count += 1
         predict = int(np.mean(list(range(predict_min, predict_max))))
         if predict +2 == predict_max:
@@ -45,6 +45,8 @@ def better_predict(number: int = 1) -> int:
             predict_max = predict
         if predict < number:
             predict_min = predict
+        if count == 20:
+            print("Программа угадала число за 20 попыток :(")
         if predict == number:
             break
     return count
